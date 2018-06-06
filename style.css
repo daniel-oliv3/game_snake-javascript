@@ -1,0 +1,18 @@
+html, body{
+	background: #9ccb95;
+	height: 100%;
+	margin: 0;
+	padding: 0; 
+}
+
+
+
+canvas{
+	background: #9ccb95;
+	margin: auto;
+	position: absolute;
+	top:  0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
