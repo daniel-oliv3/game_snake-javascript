@@ -7,12 +7,13 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+
 	<h2><strong>SCORE: </strong> <span id="score">0</span> </h2>
 	<h1 id="gameover">GAME OVER <br> Seu Score: <span id="scoreFinal"></span></h1>
 
 	<script>
 		
-		var canvas, ctx, WIDTH, HEIGHT, FPS = 15, tileSize, playing, running;
+		var canvas, ctx, WIDTH, HEIGHT, FPS = 15, tileSize, playing, running, score = 0;
 		var snake, playLabel, food;
 		var touch = [], offset = [];
 		
@@ -226,6 +227,9 @@
 			snake = new Snake();
 			food = new Food();
 			playLabel =  new PlayLabel();
+			this.score = 0;
+			this.FPS = 15;
+			changeScore();	
 
 			playing = false;
 		}
@@ -268,18 +272,25 @@
 
 			// colide comigo mesmo
 			for (var i = 1; i < snake.body.length; i++) {
-				if (snake.body[0][0] == snake.body[i][0] && snake.body[0][1] == snake.body[i][1])
+				if (snake.body[0][0] == snake.body[i][0] && snake.body[0][1] == snake.body[i][1]) {
+					gameOver();
 					newGame();
+				}
 			}
 
 			// colide com os cantos
-			if (snake.body[0][0] < 0 || snake.body[0][0] * tileSize > WIDTH || snake.body[0][1] < 0 || snake.body[0][1] * tileSize > HEIGHT) 
+			if (snake.body[0][0] < 0 || snake.body[0][0] * tileSize > WIDTH || snake.body[0][1] < 0 || snake.body[0][1] * tileSize > HEIGHT) {
+				gameOver();
 				newGame();
+			} 
 			
 			// colide com a comida
 			if (snake.body[0][0] == food.position[0] && snake.body[0][1] == food.position[1]) {
 				snake.body.splice(snake.body.length - 1, 0, [snake.body[snake.body.length - 1]]);
 				food = new Food();
+				this.score++;
+				this.FPS += 2;
+				changeScore();
 			}
 
 		}
@@ -298,13 +309,14 @@
 				playLabel.draw();
 		}
 
+		init();
+
 		function gameOver() {
 			document.getElementById("scoreFinal").innerHTML = this.score;
 			document.getElementById("gameover").style.display = "inherit";
 			setTimeout(function() {document.getElementById("gameover").style.display = "none";}, 6000);
 		}
 
-		init();
 	</script>
 </body>
 </html>
