@@ -7,6 +7,9 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+	<h2><strong>SCORE: </strong> <span id="score">0</span> </h2>
+	<h1 id="gameover">GAME OVER <br> Seu Score: <span id="scoreFinal"></span></h1>
+
 	<script>
 		
 		var canvas, ctx, WIDTH, HEIGHT, FPS = 15, tileSize, playing, running;
@@ -281,6 +284,10 @@
 
 		}
 
+		function changeScore() {
+			 document.getElementById("score").innerHTML = this.score;
+		}
+
 		function draw() {
 			ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
@@ -289,6 +296,12 @@
 
 			if (!playing)
 				playLabel.draw();
+		}
+
+		function gameOver() {
+			document.getElementById("scoreFinal").innerHTML = this.score;
+			document.getElementById("gameover").style.display = "inherit";
+			setTimeout(function() {document.getElementById("gameover").style.display = "none";}, 6000);
 		}
 
 		init();
